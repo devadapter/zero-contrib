@@ -11,18 +11,19 @@ import (
 )
 
 type target struct {
-	Addr        string        `key:",optional"`
-	User        string        `key:",optional"`
-	Password    string        `key:",optional"`
-	Service     string        `key:",optional"`
-	GroupName   string        `key:",optional"`
-	Clusters    []string      `key:",optional"`
-	NamespaceID string        `key:"namespaceid,optional"`
-	Timeout     time.Duration `key:"timeout,optional"`
-	AppName     string        `key:"appName,optional"`
-	LogLevel    string        `key:",optional"`
-	LogDir      string        `key:",optional"`
-	CacheDir    string        `key:",optional"`
+	Addr                string        `key:",optional"`
+	User                string        `key:",optional"`
+	Password            string        `key:",optional"`
+	Service             string        `key:",optional"`
+	GroupName           string        `key:",optional"`
+	Clusters            []string      `key:",optional"`
+	NamespaceID         string        `key:"namespaceid,optional"`
+	Timeout             time.Duration `key:"timeout,optional"`
+	AppName             string        `key:"appName,optional"`
+	LogLevel            string        `key:",optional"`
+	LogDir              string        `key:",optional"`
+	CacheDir            string        `key:",optional"`
+	NotLoadCacheAtStart string        `key:",optional"`
 }
 
 // parseURL with parameters
@@ -46,6 +47,9 @@ func parseURL(rawURL url.URL) (target, error) {
 
 	if tgt.NamespaceID == "" {
 		tgt.NamespaceID = "public"
+	}
+	if tgt.NotLoadCacheAtStart == "" {
+		tgt.NotLoadCacheAtStart = "true"
 	}
 
 	tgt.LogLevel = os.Getenv("NACOS_LOG_LEVEL")

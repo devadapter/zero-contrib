@@ -39,13 +39,15 @@ func (b *builder) Build(url resolver.Target, conn resolver.ClientConn, opts reso
 	sc := []constant.ServerConfig{
 		*constant.NewServerConfig(host, port),
 	}
+	isCache, _ := strconv.ParseBool(tgt.NotLoadCacheAtStart)
 
 	cc := &constant.ClientConfig{
-		AppName:     tgt.AppName,
-		NamespaceId: tgt.NamespaceID,
-		Username:    tgt.User,
-		Password:    tgt.Password,
-		TimeoutMs:   uint64(tgt.Timeout),
+		AppName:             tgt.AppName,
+		NamespaceId:         tgt.NamespaceID,
+		Username:            tgt.User,
+		Password:            tgt.Password,
+		TimeoutMs:           uint64(tgt.Timeout),
+		NotLoadCacheAtStart: isCache,
 	}
 
 	if tgt.CacheDir != "" {
